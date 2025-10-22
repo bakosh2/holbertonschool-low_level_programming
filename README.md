@@ -1,1 +1,0 @@
-# Holberton Low Level Programming
