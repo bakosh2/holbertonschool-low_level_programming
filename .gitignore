@@ -1,0 +1,12 @@
+# Executable files
+*-
+
+# Test files
+*main.c
+test*
+
+# Object files
+*.o
+
+# Backup files
+*~
