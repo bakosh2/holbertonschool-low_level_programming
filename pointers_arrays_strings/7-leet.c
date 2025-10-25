@@ -8,18 +8,17 @@
  */
 char *leet(char *str)
 {
-	char *ptr = str;
-	char *leet_chars = "aAeEoOtTlL";
-	char *leet_nums = "4433007711";
 	int i, j;
+	char letters[] = "aAeEoOtTlL";
+	char numbers[] = "4433007711";
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		for (j = 0; leet_chars[j] != '\0'; j++)
+		for (j = 0; letters[j] != '\0'; j++)
 		{
-			if (str[i] == leet_chars[j])
+			if (str[i] == letters[j])
 			{
-				str[i] = leet_nums[j];
+				str[i] = numbers[j];
 				break;
 			}
 		}
