@@ -1,43 +1,41 @@
 #include "main.h"
 
 /**
- * _atoi - converts string to integer
- * @s: input string
+ * _atoi - converts a string to an integer
+ * @s: string to convert
  * Return: converted integer
  */
 int _atoi(char *s)
 {
-	int result = 0;
+	unsigned int num = 0;
 	int sign = 1;
-	int i = 0;
-	int digit;
+	int started = 0;
 
-	/* Skip non-digit characters and handle signs */
-	while (s[i] != '\0' && (s[i] < '0' || s[i] > '9'))
+	while (*s)
 	{
-		if (s[i] == '-')
+		if (*s == '-')
 			sign *= -1;
-		i++;
+
+		if (*s >= '0' && *s <= '9')
+		{
+			started = 1;
+			/* Check for overflow before actually causing it */
+			if (num > (2147483647 - (*s - '0')) / 10)
+			{
+				if (sign == 1)
+					return (2147483647);
+				else
+					return (-2147483648);
+			}
+			num = num * 10 + (*s - '0');
+		}
+		else if (started)
+		{
+			/* Stop if we already started converting numbers */
+			break;
+		}
+		s++;
 	}
 
-	/* Convert digits to integer with overflow check */
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		digit = s[i] - '0';
-		
-		/* Check for positive overflow */
-		if (sign == 1 && (result > 214748364 || 
-			(result == 214748364 && digit > 7)))
-			return (2147483647);
-		
-		/* Check for negative overflow */
-		if (sign == -1 && (result > 214748364 || 
-			(result == 214748364 && digit > 8)))
-			return (-2147483648);
-		
-		result = result * 10 + digit;
-		i++;
-	}
-
-	return (result * sign);
+	return (num * sign);
 }
