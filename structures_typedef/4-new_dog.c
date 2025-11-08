@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <string.h>
 #include "dog.h"
 
 /**
@@ -12,45 +11,44 @@
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-    dog_t *new_dog;
-    char *name_copy, *owner_copy;
-    int name_len, owner_len;
+    dog_t *d;
+    char *n, *o;
+    int i, nl = 0, ol = 0;
 
-    if (name == NULL || owner == NULL)
+    if (!name || !owner) 
         return (NULL);
 
-    /* Calculate string lengths */
-    name_len = strlen(name);
-    owner_len = strlen(owner);
+    while (name[nl]) nl++;
+    while (owner[ol]) ol++;
 
-    /* Allocate memory for the dog structure */
-    new_dog = malloc(sizeof(dog_t));
-    if (new_dog == NULL)
+    d = malloc(sizeof(dog_t));
+    if (!d) 
         return (NULL);
 
-    /* Allocate and copy name */
-    name_copy = malloc(name_len + 1);
-    if (name_copy == NULL)
+    n = malloc(nl + 1);
+    if (!n)
     {
-        free(new_dog);
+        free(d);
         return (NULL);
     }
-    strcpy(name_copy, name);
-
-    /* Allocate and copy owner */
-    owner_copy = malloc(owner_len + 1);
-    if (owner_copy == NULL)
+    
+    o = malloc(ol + 1);
+    if (!o)
     {
-        free(name_copy);
-        free(new_dog);
+        free(n);
+        free(d);
         return (NULL);
     }
-    strcpy(owner_copy, owner);
 
-    /* Initialize the dog structure */
-    new_dog->name = name_copy;
-    new_dog->age = age;
-    new_dog->owner = owner_copy;
-
-    return (new_dog);
+    for (i = 0; i <= nl; i++)
+        n[i] = name[i];
+    
+    for (i = 0; i <= ol; i++)
+        o[i] = owner[i];
+    
+    d->name = n;
+    d->age = age;
+    d->owner = o;
+    
+    return (d);
 }
