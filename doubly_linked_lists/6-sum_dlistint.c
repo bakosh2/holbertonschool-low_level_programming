@@ -4,18 +4,20 @@
  * sum_dlistint - returns the sum of all n in a dlistint_t list
  * @head: pointer to the head of the list
  *
- * Return: sum of all data, or 0 if empty
+ * Return: sum of all data, or 0 if list is empty
  */
 int sum_dlistint(dlistint_t *head)
 {
-    int sum = 0;
+	int sum = 0;
 
-    while (head != NULL)
-    {
-        sum += head->n;
-        head = head->next;
-    }
+	while (head != NULL)
+	{
+		sum += head->n;
+		head = head->next;
+	}
 
-    return (sum);
+	return (sum);
+
 }
+
 
