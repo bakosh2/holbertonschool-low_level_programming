@@ -1,25 +1,54 @@
 #include "lists.h"
 
 /**
- * get_dnodeint_at_index - returns the nth node of a dlistint_t list
- * @head: pointer to the head of the list
- * @index: index of the node to return (starting at 0)
+ * insert_dnodeint_at_index - inserts a new node at a given index
+ * @h: pointer to pointer to head
+ * @idx: index to insert at
+ * @n: value for the new node
  *
- * Return: pointer to the node at index, or NULL if it doesn't exist
+ * Return: address of new node, or NULL on failure
  */
-dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index)
+dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *current = head;
+	dlistint_t *new, *current;
 	unsigned int i = 0;
 
-	while (current != NULL)
+	if (h == NULL)
+		return (NULL);
+
+	/* Insert at beginning */
+	if (idx == 0)
+		return (add_dnodeint(h, n));
+
+	current = *h;
+
+	/* Traverse until the position before idx */
+	while (current != NULL && i < idx - 1)
 	{
-		if (i == index)
-			return (current);
 		current = current->next;
 		i++;
 	}
 
-	return (NULL);
+	/* If index is out of range */
+	if (current == NULL)
+		return (NULL);
+
+	/* Insert at end */
+	if (current->next == NULL && i == idx - 1)
+		return (add_dnodeint_end(h, n));
+
+	/* Insert in the middle */
+	new = malloc(sizeof(dlistint_t));
+	if (new == NULL)
+		return (NULL);
+
+	new->n = n;
+	new->prev = current;
+	new->next = current->next;
+
+	current->next->prev = new;
+	current->next = new;
+
+	return (new);
 }
 
